@@ -1,0 +1,175 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zhaogang.intl</groupId>
+  <artifactId>i18nResourceGenerator</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>i18nResourceGenerator</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.13</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+
+    <plugins>
+
+      <!-- 统一UTF-8编码 -->
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+
+      <!--  Maven生成可执行jar包的方式  -->
+
+      <!-- 方法一： 使用maven-jar-plugin和maven-dependency-plugin插件打包  -->
+
+
+      <!-- 默认的mvn install生成的jar是不带主类入口的，需要在maven-compile-plugin中设置主类 -->
+      <!-- 配置maven-jar-plugin，用于将代码打包成jar文件 -->
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-jar-plugin</artifactId>-->
+        <!--&lt;!&ndash; The configuration of the plugin &ndash;&gt;-->
+        <!--<configuration>-->
+          <!--&lt;!&ndash; Configuration of the archive &ndash;&gt;-->
+          <!--<archive>-->
+            <!--&lt;!&ndash; 生成的jar中，默认包含META-INF/maven/com.zhaogang.intl/i18nResourceGenerator/pom.xml和pom.properties，配置false，不包含。 &ndash;&gt;-->
+            <!--<addMavenDescriptor>false</addMavenDescriptor>-->
+
+            <!--&lt;!&ndash; Manifest specific configuration &ndash;&gt;-->
+            <!--<manifest>-->
+
+              <!--<mainClass>com.zhaogang.intl.App</mainClass>    &lt;!&ndash; 设置主类入口，应用的main class &ndash;&gt;-->
+              <!--<addClasspath>true</addClasspath>               &lt;!&ndash; 是否要把第三方jar放到manifest的classpath中 &ndash;&gt;-->
+              <!--<classpathPrefix>lib/</classpathPrefix>   &lt;!&ndash; 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ &ndash;&gt;-->
+
+            <!--</manifest>-->
+          <!--</archive>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
+
+      <!-- 拷贝依赖的jar包到lib目录 -->
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-dependency-plugin</artifactId>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>copy</id>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+              <!--<goal>copy-dependencies</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+              <!--<outputDirectory>-->
+                <!--${project.build.directory}/lib-->
+              <!--</outputDirectory>-->
+            <!--</configuration>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+
+      <!-- 方法二： 使用maven-assembly-plugin插件打包 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.0.0</version>
+
+        <configuration>
+
+          <archive>
+
+            <manifest>
+              <mainClass>com.zhaogang.intl.App</mainClass> <!-- 设置主类入口，应用的main class -->
+            </manifest>
+
+            <!-- 生成的jar中，默认包含META-INF/maven/com.zhaogang.intl/i18nResourceGenerator/pom.xml和pom.properties，配置false，不包含。 -->
+            <addMavenDescriptor>false</addMavenDescriptor>
+
+          </archive>
+
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+
+        </configuration>
+
+        <!-- 至此，可以mvn package assembly:single命令打包，生成可执行jar -->
+
+        <!-- 加上以下配置，可以直接以mvn package来打包，生成可执行jar -->
+        <!-- 其中<phase>package</phase>、<goal>single</goal>即表示在执行package打包时，执行assembly:single，所以可以直接使用mvn package打包。 -->
+        <!-- 不过，如果项目中用到spring Framework，用这种方式打出来的包运行时会出错，使用下面的方法三可以处理。 -->
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+
+      </plugin>
+
+
+      <!--  方法三： 使用maven-shade-plugin插件打包，配置完成后，执行mvn package即可打包。在target目录下会生成两个jar包，注意不是original-xxx.jar文件，而是另外一个。和maven-assembly-plugin一样，生成的jar文件包含了所有依赖，所以可以直接运行  -->
+
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-shade-plugin</artifactId>-->
+        <!--<version>2.4.1</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+              <!--<goal>shade</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+
+              <!--<transformers>-->
+                <!--<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+                  <!--<mainClass>com.zhaogang.intl.App</mainClass>-->
+                <!--</transformer>-->
+              <!--</transformers>-->
+
+              <!--&lt;!&ndash; 如果项目中用到了spring Framework，将依赖打到一个jar包中，运行时会出现读取XML schema文件出错。原因是Spring Framework的多个jar包中包含相同的文件spring.handlers和spring.schemas，如果生成一个jar包会互相覆盖。为了避免互相影响，可以使用AppendingTransformer来对文件内容追加合并： &ndash;&gt;-->
+              <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                <!--<resource>META-INF/spring.handlers</resource>-->
+              <!--</transformer>-->
+              <!--<transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                <!--<resource>META-INF/spring.schemas</resource>-->
+              <!--</transformer>-->
+
+
+            <!--</configuration>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+
+
+
+    </plugins>
+
+  </build>
+
+</project>
