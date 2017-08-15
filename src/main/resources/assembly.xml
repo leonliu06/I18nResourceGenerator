@@ -36,7 +36,7 @@
     <dependencySets>
         <dependencySet>
             <outputDirectory>/lib</outputDirectory>
-            <useProjectArtifact>true</useProjectArtifact>      <!-- 当前项目构件是否包含在这个依赖集合里 -->
+            <useProjectArtifact>false</useProjectArtifact>      <!-- 当前项目构件是否包含在这个依赖集合里 -->
             <scope>runtime</scope>                              <!-- 将scope为runtime的依赖包打包到lib目录下。 -->
         </dependencySet>
     </dependencySets>
