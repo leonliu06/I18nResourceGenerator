@@ -1,0 +1,45 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/3.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/3.0.0 http://maven.apache.org/xsd/assembly-3.0.0.xsd">
+
+    <id>distribution</id>
+
+    <formats>
+        <format>zip</format>                                    <!-- 设置打包的格式 -->
+    </formats>
+
+    <!-- 要打包的文件 -->
+    <fileSets>
+
+        <!--<fileSet>-->
+            <!--<directory>${project.basedir}\src\main\resources</directory>-->
+            <!--<outputDirectory>\res</outputDirectory>-->
+            <!--<excludes>-->
+                <!--<exclude>assembly.xml</exclude>-->
+            <!--</excludes>-->
+        <!--</fileSet>-->
+
+        <!-- target目录下的jar包 -->
+        <fileSet>
+            <directory>${project.build.directory}/</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+
+    </fileSets>
+
+
+
+    <!-- 依赖的第三方包打包到lib目录下 -->
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/lib</outputDirectory>
+            <useProjectArtifact>true</useProjectArtifact>      <!-- 当前项目构件是否包含在这个依赖集合里 -->
+            <scope>runtime</scope>                              <!-- 将scope为runtime的依赖包打包到lib目录下。 -->
+        </dependencySet>
+    </dependencySets>
+
+
+</assembly>

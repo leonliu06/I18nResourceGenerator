@@ -22,6 +22,12 @@
       <version>3.13</version>
     </dependency>
 
+    <!--<dependency>-->
+      <!--<groupId>javax.media</groupId>-->
+      <!--<artifactId>jmf</artifactId>-->
+      <!--<version>2.1.1e</version>-->
+    <!--</dependency>-->
+
   </dependencies>
 
   <build>
@@ -35,6 +41,15 @@
         <configuration>
           <source>1.7</source>
           <target>1.7</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>2.5</version>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
@@ -98,37 +113,59 @@
         <configuration>
 
           <archive>
-
             <manifest>
               <mainClass>com.zhaogang.intl.App</mainClass> <!-- 设置主类入口，应用的main class -->
+              <!--<addClasspath>true</addClasspath>               &lt;!&ndash; 是否要把第三方jar放到manifest的classpath中 &ndash;&gt;-->
+              <!--<classpathPrefix>lib/</classpathPrefix>         &lt;!&ndash; 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ &ndash;&gt;-->
             </manifest>
-
             <!-- 生成的jar中，默认包含META-INF/maven/com.zhaogang.intl/i18nResourceGenerator/pom.xml和pom.properties，配置false，不包含。 -->
             <addMavenDescriptor>false</addMavenDescriptor>
-
           </archive>
 
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
+          <!-- 使用插件自带的在三个预定义描述符中的一个 -->
+          <!--<descriptorRefs>-->
+            <!--<descriptorRef>jar-with-dependencies</descriptorRef>        &lt;!&ndash; Pre-defined Descriptor Files 使用预定义描述符文件之一 &ndash;&gt;-->
+          <!--</descriptorRefs>-->
 
         </configuration>
 
         <!-- 至此，可以mvn package assembly:single命令打包，生成可执行jar -->
-
         <!-- 加上以下配置，可以直接以mvn package来打包，生成可执行jar -->
         <!-- 其中<phase>package</phase>、<goal>single</goal>即表示在执行package打包时，执行assembly:single，所以可以直接使用mvn package打包。 -->
         <!-- 不过，如果项目中用到spring Framework，用这种方式打出来的包运行时会出错，使用下面的方法三可以处理。 -->
-        <executions>
+        <executions>                    <!-- 执行器 mvn assembly:assembly -->
           <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
+            <id>make-assembly</id>      <!-- 名字任意 -->
+            <phase>package</phase>      <!-- 绑定到package生命周期上 -->
             <goals>
-              <goal>single</goal>
+              <goal>single</goal>       <!-- 只运行一次 -->
             </goals>
+
+            <configuration>
+              <descriptors>
+                <descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>   <!-- 指定描述符文件路径 -->
+                <!--<descriptor>src/main/resources/assembly.xml</descriptor>-->               <!-- 或者这样 -->
+              </descriptors>
+            </configuration>
+
           </execution>
         </executions>
+      </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>    <!-- 生成的jar中，默认包含META-INF/maven/com.zhaogang.intl/i18nResourceGenerator/pom.xml和pom.properties，配置false，不包含。 -->
+            <!-- Manifest specific configuration -->
+            <manifest>
+              <mainClass>com.zhaogang.intl.App</mainClass>    <!-- 设置主类入口，应用的main class -->
+              <addClasspath>true</addClasspath>               <!-- 是否要把第三方jar放到manifest的classpath中 -->
+              <classpathPrefix>lib/</classpathPrefix>         <!-- 生成的manifest中classpath的前缀，因为要把第三方jar放到lib目录下，所以classpath的前缀是lib/ -->
+            </manifest>
+          </archive>
+        </configuration>
       </plugin>
 
 

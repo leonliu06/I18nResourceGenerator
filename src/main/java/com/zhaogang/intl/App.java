@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 
 /**
@@ -38,7 +37,7 @@ public class App
         //System.out.println(System.in.read());
 
         //File file = new File("E:\\i18nResourceGenerator\\src\\main\\java\\com\\zhaogang\\intl\\国际化模版.xls");
-        File file = new File("国际化模版.xls");
+        File file = new File("i18n.xls");
 
         if(!file.exists()){
             System.out.println("File doesn't exist!");
