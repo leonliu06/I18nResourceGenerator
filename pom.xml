@@ -121,8 +121,8 @@
             </goals>
             <configuration>
               <descriptors>
-                <descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>     <!-- 指定描述符文件路径 -->
-                <!--<descriptor>src/main/resources/assembly.xml</descriptor>-->                     <!-- 或者这样 -->
+                <!--<descriptor>${project.basedir}/src/main/resources/assembly.xml</descriptor>     &lt;!&ndash; 指定描述符文件路径 &ndash;&gt;-->
+                <descriptor>src/main/resources/assembly.xml</descriptor>                      或者这样
               </descriptors>
             </configuration>
           </execution>

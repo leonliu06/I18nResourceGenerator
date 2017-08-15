@@ -11,13 +11,13 @@
     <!-- 要打包的文件 -->
     <fileSets>
 
-        <!--<fileSet>-->
-            <!--<directory>${project.basedir}\src\main\resources</directory>-->
-            <!--<outputDirectory>\res</outputDirectory>-->
-            <!--<excludes>-->
-                <!--<exclude>assembly.xml</exclude>-->
-            <!--</excludes>-->
-        <!--</fileSet>-->
+        <fileSet>
+            <directory>${project.basedir}/src/main/resources/</directory>
+            <outputDirectory>/res</outputDirectory>
+            <excludes>
+                <exclude>assembly.xml</exclude>
+            </excludes>
+        </fileSet>
 
         <!-- target目录下的jar包 -->
         <fileSet>
