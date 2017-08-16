@@ -151,8 +151,6 @@
         </configuration>
       </plugin>
 
-
-
       <!-- 生成附属构件：源码包 -->
       <!--<plugin>-->
         <!--<groupId>org.apache.maven.plugins</groupId>-->

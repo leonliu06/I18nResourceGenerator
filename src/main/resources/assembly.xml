@@ -39,7 +39,7 @@
             <includes>
                 <include>README.*</include>
                 <include>LICENCE.*</include>
-                <include>run.*</include>
+                <include>startup.*</include>
             </includes>
         </fileSet>
 
