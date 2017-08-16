@@ -49,8 +49,6 @@ public class App
             return;
         }
 
-        System.out.println("Extracting ...");
-
         FileInputStream fileInputStream = new FileInputStream(file);
 
         Workbook workbook = new HSSFWorkbook(fileInputStream);
@@ -91,6 +89,8 @@ public class App
         for(int i = keyRow + 1; i < totalRows; i++){
             keys.add(sheet.getRow(i).getCell(keyCol) == null ? "" : sheet.getRow(i).getCell(keyCol).toString());
         }
+
+        System.out.println("Extracting ...");
 
         for(int col = keyCol + 1; col < sheet.getRow(keyRow).getLastCellNum(); col++){
 
