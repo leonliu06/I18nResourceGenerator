@@ -7,6 +7,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 
 /**
@@ -31,18 +32,25 @@ public class App
 //        System.out.println( args[0] );
 
 
-        //Runtime.getRuntime().exec("C:\\Windows\\System32\\cmd.exe");
+        System.out.println("Enter any key to start: ");
+        System.in.read();
 
-        //System.out.println("Enter any key to start: ");
-        //System.out.println(System.in.read());
+//        Scanner scanner = new Scanner(System.in);
+//        System.out.println("请输入i18x.xls文件全路径：");
+//        String line = scanner.nextLine();
 
-        //File file = new File("E:\\i18nResourceGenerator\\src\\main\\java\\com\\zhaogang\\intl\\i18n.xls");
+
         File file = new File("i18n.xls");
 
         if(!file.exists()){
-            System.out.println("File doesn't exist!");
+            System.out.println("File named i18n.xls doesn't exist, please move it to the directory where run.bat or run.sh resides!");
+            System.out.println("Enter any key to terminate the program and restart it after fixing that.");
+            System.out.println();
+            System.in.read();
             return;
         }
+
+        System.out.println("Extracting ...");
 
         FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -71,7 +79,10 @@ public class App
             }
         }
         if(!foundKEY){
-            System.out.println("wrong excel format");
+            System.out.println("Wrong excel format, please use the given template as same as resources/i18n.xls !");
+            System.out.println("Enter any key to terminate the program and restart it after fixing that.");
+            System.out.println();
+            System.in.read();
             return;
         }
 
@@ -99,8 +110,8 @@ public class App
 
         }
 
-        //System.out.println("Success! Please enter any key to end: ");
-        //System.in.read();
+        System.out.println("Success! Please enter any key to quit: ");
+        System.in.read();
 
     }
 }
