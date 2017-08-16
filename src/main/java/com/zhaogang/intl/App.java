@@ -36,15 +36,13 @@ public class App
         //System.out.println("Enter any key to start: ");
         //System.out.println(System.in.read());
 
-        //File file = new File("E:\\i18nResourceGenerator\\src\\main\\java\\com\\zhaogang\\intl\\国际化模版.xls");
+        //File file = new File("E:\\i18nResourceGenerator\\src\\main\\java\\com\\zhaogang\\intl\\i18n.xls");
         File file = new File("i18n.xls");
 
         if(!file.exists()){
             System.out.println("File doesn't exist!");
             return;
         }
-
-
 
         FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -54,48 +52,48 @@ public class App
 
         int totalRows = sheet.getPhysicalNumberOfRows();
 
-        int zhCNRow = 0;
-        int zhCNCol = 0;
+        int keyRow = 0;
+        int keyCol = 0;
 
-        boolean foundZhCN = false;
+        boolean foundKEY = false;
 
         for(int row = 0; row < totalRows; row++){
             for(int col = 0; col < sheet.getRow(row).getLastCellNum(); col++){
-                if(sheet.getRow(row).getCell(col) != null && sheet.getRow(row).getCell(col).toString().equals("zh_CN")){
-                    zhCNRow = row;
-                    zhCNCol = col;
-                    foundZhCN = true;
+                if(sheet.getRow(row).getCell(col) != null && sheet.getRow(row).getCell(col).toString().equals("KEY")){
+                    keyRow = row;
+                    keyCol = col;
+                    foundKEY = true;
                     break;
                 }
             }
-            if(foundZhCN){
+            if(foundKEY){
                 break;
             }
         }
-        if(!foundZhCN){
-            System.out.println("模版格式错误！");
+        if(!foundKEY){
+            System.out.println("wrong excel format");
             return;
         }
 
         // key
         List<String> keys = new ArrayList<String>();
 
-        for(int i = zhCNRow + 1; i < totalRows; i++){
-            keys.add(sheet.getRow(i).getCell(zhCNCol) == null ? "" : sheet.getRow(i).getCell(zhCNCol).toString());
+        for(int i = keyRow + 1; i < totalRows; i++){
+            keys.add(sheet.getRow(i).getCell(keyCol) == null ? "" : sheet.getRow(i).getCell(keyCol).toString());
         }
 
-        for(int col = zhCNCol; col < sheet.getRow(zhCNRow).getLastCellNum(); col++){
+        for(int col = keyCol + 1; col < sheet.getRow(keyRow).getLastCellNum(); col++){
 
-            if(sheet.getRow(zhCNRow).getCell(col) == null){
+            if(sheet.getRow(keyRow).getCell(col) == null){
                 continue;
             }
-            File proFile = new File("message_" + sheet.getRow(zhCNRow).getCell(col).toString() + ".properties");
+            File proFile = new File("message_" + sheet.getRow(keyRow).getCell(col).toString() + ".properties");
             FileOutputStream fos = new FileOutputStream(proFile);
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(fos));
 
-            for(int row = zhCNRow + 1; row < totalRows; row++){
+            for(int row = keyRow + 1; row < totalRows; row++){
                 String value = sheet.getRow(row).getCell(col) == null ? "" : sheet.getRow(row).getCell(col).toString();
-                dos.write((keys.get(row - zhCNRow - 1) + "=" + value + "\r\n").getBytes("utf-8"));
+                dos.write((keys.get(row - keyRow - 1) + "=" + value + "\r\n").getBytes("utf-8"));
             }
             dos.flush();
 

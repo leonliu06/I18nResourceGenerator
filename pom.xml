@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.zhaogang.intl</groupId>
-  <artifactId>i18nResourceGenerator</artifactId>
+  <artifactId>I18nResourceGenerator</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>i18nResourceGenerator</name>
+  <name>I18nResourceGenerator</name>
   <url>http://maven.apache.org</url>
   <dependencies>
 
@@ -144,6 +144,39 @@
           </archive>
         </configuration>
       </plugin>
+
+
+
+      <!-- 生成附属构件：源码包 -->
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-source-plugin</artifactId>-->
+        <!--<version>2.1.2</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>attach-sources</id>-->
+            <!--<phase>verify</phase>-->
+            <!--<goals>-->
+              <!--<goal>jar-no-fork</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
+
+      <!-- 生成附属构件：Javadoc -->
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-javadoc-plugin</artifactId>-->
+        <!--<version>2.7</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>attach-javadocs</id>-->
+            <!--<goals>-->
+              <!--<goal>jar</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
 
 
       <!--  方法三： 使用maven-shade-plugin插件打包，配置完成后，执行mvn package即可打包。在target目录下会生成两个jar包，注意不是original-xxx.jar文件，而是另外一个。和maven-assembly-plugin一样，生成的jar文件包含了所有依赖，所以可以直接运行  -->
