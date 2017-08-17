@@ -1,5 +1,5 @@
 #### Introduction
-&emsp;Extract i18n resources for java application from excel files in the given format which you can get from resources\i18n.xls.
+&emsp;Extract i18n resources for java application from excel files in the provided format as same as resources\i18n.xls.
 
 #### Guide
 - Move your excel file to the directory where run.bat or run.sh resides.

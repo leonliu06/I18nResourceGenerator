@@ -1,7 +1,7 @@
 
 Introduction
 
- Extract i18n resources for java application from excel files in the given format which you can get from resources\i18n.xls.
+ Extract i18n resources for java application from excel files in the provided format as same as resources\i18n.xls.
 
 Guide
 

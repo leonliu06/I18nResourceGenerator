@@ -35,7 +35,7 @@ public class App
 //
 //        System.out.println( args[0] );
 
-
+        System.out.println("===============================================================================================================");
         System.out.println("Enter any key to begin extracting: ");
         System.in.read();
 
@@ -47,8 +47,12 @@ public class App
         File file = new File("i18n.xls");
 
         if(!file.exists()){
+            System.out.println("===============================================================================================================");
             System.out.println("File named i18n.xls doesn't exist, please move it to the directory where startup.bat or startup.sh resides!");
             System.out.println("Enter any key to terminate the program and restart it after fixing that.");
+            System.out.println("Read README for more details and information.");
+            System.out.println("===============================================================================================================");
+
             System.in.read();
             return;
         }
@@ -80,9 +84,11 @@ public class App
             }
         }
         if(!foundKEY){
+            System.out.println("===============================================================================================================");
             System.out.println("Wrong excel format, please use the given template as same as resources/i18n.xls!");
             System.out.println("Enter any key to terminate the program and restart it after fixing that.");
             System.out.println();
+            System.out.println("===============================================================================================================");
             System.in.read();
             return;
         }
@@ -107,6 +113,7 @@ public class App
 //            }
 //        });
 
+        System.out.println("===============================================================================================================");
         System.out.println("Extracting ...");
 
         for(int col = keyCol + 1; col < sheet.getRow(keyRow).getLastCellNum(); col++){
@@ -126,6 +133,7 @@ public class App
 
         }
 
+        System.out.println("===============================================================================================================");
         System.out.println("Success!" + "\n" + "Please enter any key to quit: ");
         System.in.read();
 
