@@ -107,6 +107,8 @@ public class App
 //            }
 //        });
 
+        System.out.println("Extracting ...");
+
         for(int col = keyCol + 1; col < sheet.getRow(keyRow).getLastCellNum(); col++){
 
             if(sheet.getRow(keyRow).getCell(col) == null){
