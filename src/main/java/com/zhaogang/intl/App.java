@@ -8,6 +8,10 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -49,8 +53,6 @@ public class App
             return;
         }
 
-        System.out.println("Extracting ...");
-
         FileInputStream fileInputStream = new FileInputStream(file);
 
         Workbook workbook = new HSSFWorkbook(fileInputStream);
@@ -85,12 +87,25 @@ public class App
             return;
         }
 
+
+
         // key
         List<String> keys = new ArrayList<String>();
 
         for(int i = keyRow + 1; i < totalRows; i++){
             keys.add(sheet.getRow(i).getCell(keyCol) == null ? "" : sheet.getRow(i).getCell(keyCol).toString());
         }
+
+
+//        ExecutorService executorService = Executors.newCachedThreadPool();
+//        executorService.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                TimeUnit.SECONDS.
+//                while ()
+//                    System.out.println("Extracting ...");
+//            }
+//        });
 
         for(int col = keyCol + 1; col < sheet.getRow(keyRow).getLastCellNum(); col++){
 
