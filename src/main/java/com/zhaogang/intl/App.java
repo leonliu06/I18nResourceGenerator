@@ -45,7 +45,7 @@ public class App
 
 
         // File file = new File("i18n.xls");
-        File file = new File("D:\\Workspace\\i18n.xls");
+        File file = new File("E:\\I18nResourceGenerator\\i18nw.xls");
 
         if(!file.exists()){
             System.out.println("===============================================================================================================");
@@ -127,12 +127,29 @@ public class App
             }
             File proFile = new File("message_" + sheet.getRow(keyRow).getCell(col).toString() + ".properties");
             FileOutputStream fos = new FileOutputStream(proFile);
-            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(fos));
+            DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(fos, 1024 * 1024 * 5));
 
             for(int row = keyRow + 1; row < totalRows; row++){
                 if(sheet.getRow(row) == null){
                     continue;
                 }
+
+                if(keys.get(row - keyRow - 1).equals("#VALUE!")){
+                    continue;
+                }
+
+                // 过滤重复KEY
+                boolean duplicate = false;
+                for(int i = 0; i < row - keyRow - 1; i++){
+                    if(keys.get(row - keyRow - 1).equals(keys.get(i))){
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if(duplicate){
+                    continue;
+                }
+
                 String value = sheet.getRow(row).getCell(col) == null ? "" : sheet.getRow(row).getCell(col).toString();
                 dos.write((keys.get(row - keyRow - 1) + "=" + value + "\r\n").getBytes("utf-8"));
             }
