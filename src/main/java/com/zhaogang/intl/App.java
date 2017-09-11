@@ -44,7 +44,8 @@ public class App
 //        String line = scanner.nextLine();
 
 
-        File file = new File("i18n.xls");
+        // File file = new File("i18n.xls");
+        File file = new File("D:\\Workspace\\i18n.xls");
 
         if(!file.exists()){
             System.out.println("===============================================================================================================");
@@ -71,6 +72,9 @@ public class App
         boolean foundKEY = false;
 
         for(int row = 0; row < totalRows; row++){
+            if(sheet.getRow(row) == null){
+                continue;
+            }
             for(int col = 0; col < sheet.getRow(row).getLastCellNum(); col++){
                 if(sheet.getRow(row).getCell(col) != null && sheet.getRow(row).getCell(col).toString().equals("KEY")){
                     keyRow = row;
@@ -99,7 +103,7 @@ public class App
         List<String> keys = new ArrayList<String>();
 
         for(int i = keyRow + 1; i < totalRows; i++){
-            keys.add(sheet.getRow(i).getCell(keyCol) == null ? "" : sheet.getRow(i).getCell(keyCol).toString());
+            keys.add((sheet.getRow(i) == null || sheet.getRow(i).getCell(keyCol) == null) ? "" : sheet.getRow(i).getCell(keyCol).toString());
         }
 
 
@@ -126,6 +130,9 @@ public class App
             DataOutputStream dos = new DataOutputStream(new BufferedOutputStream(fos));
 
             for(int row = keyRow + 1; row < totalRows; row++){
+                if(sheet.getRow(row) == null){
+                    continue;
+                }
                 String value = sheet.getRow(row).getCell(col) == null ? "" : sheet.getRow(row).getCell(col).toString();
                 dos.write((keys.get(row - keyRow - 1) + "=" + value + "\r\n").getBytes("utf-8"));
             }

@@ -5,7 +5,7 @@
     <id>assembly</id>
 
     <formats>
-        <format>zip</format>                                    <!-- 设置打包的格式 -->
+        <format>tar</format>                                    <!-- 设置打包的格式 -->
     </formats>
 
     <!-- 要打包的文件 -->
