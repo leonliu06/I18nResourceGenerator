@@ -44,8 +44,8 @@ public class App
 //        String line = scanner.nextLine();
 
 
-        // File file = new File("i18n.xls");
-        File file = new File("E:\\I18nResourceGenerator\\i18nw.xls");
+        File file = new File("i18n.xls");
+        //File file = new File("E:\\I18nResourceGenerator\\i18nw.xls");
 
         if(!file.exists()){
             System.out.println("===============================================================================================================");
